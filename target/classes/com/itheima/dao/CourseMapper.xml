@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.CourseMapper">
+
+    <insert id="addCourse" parameterType="Courses">
+        insert into mybatis.course(name,hours ,schools,pic)
+        values (#{name},#{hours},#{schools},#{pic});
+    </insert>
+
+    <delete id="deleteCourseById" parameterType="int">
+        delete from mybatis.course where id = #{id};
+    </delete>
+
+    <update id="updateCourse" parameterType="Courses">
+        update mybatis.course set name = #{name},hours = #{hours},schools=#{schools},pic=#{pic}
+        where id = #{id};
+    </update>
+
+    <select id="queryCourseById" resultType="Courses">
+        select * from mybatis.course where id = #{id};
+    </select>
+
+    <select id="queryCourseCount"  resultType="int">
+        select count(*) from mybatis.course;
+    </select>
+
+    <select id="queryAllCourse" resultType="Courses">
+        select * from mybatis.course limit #{curPage},#{pageSize};
+    </select>
+
+    <select id="queryCourseByName"  resultType="Courses">
+        select * from mybatis.course
+        <where>
+            <if test="name != null and name != ''">
+                name like "%"#{name}"%"
+            </if>
+        </where>
+        limit #{curPage},#{pageSize};
+    </select>
+
+    <select id="queryCourseCountByName"  resultType="int">
+        select count(*) from mybatis.course
+        where name like "%"#{name}"%";
+    </select>
+
+</mapper>
